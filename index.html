@@ -98,9 +98,14 @@
         <form id="uploadForm" class="upload-form">
             <label for="movieFile">Choose File</label>
             <input type="file" id="movieFile" required>
-            <label for="language">Choose Language</label>
+            <label for="language">Choose Input Language</label>
             <select id="language">
                 <option value="en">English</option>
+            </select>
+			<label for="output_language">Choose Output Language</label>
+			<select id="output_language">
+                <option value="en">English</option>
+				<option value="zh">Chinese</option>
             </select>
             <div class="spinner" id="spinner"></div>
             <button type="submit">Upload</button>
@@ -133,6 +138,7 @@
         e.preventDefault();
         const fileInput = document.getElementById('movieFile');
         const language = document.getElementById('language').value;
+		const output_language = document.getElementById('output_language').value;
         const file = fileInput.files[0];
         const fileName = file.name;
 
@@ -143,7 +149,7 @@
         fetch('https://2o18i678y9.execute-api.us-east-1.amazonaws.com/prod/generate-upload-url', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 'user_name': 'testuser', 'filename': fileName, 'lang': language })
+            body: JSON.stringify({ 'user_name': 'testuser', 'filename': fileName, 'lang': language,'output_lang':output_language })
         })
         .then(response => response.json())
         .then(data => {
